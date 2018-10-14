@@ -15,7 +15,7 @@
     QList<QString> kecheng2;
       kecheng2 <<"72"<<"76"<<"85"<<"80";
     QList< QList<QString> > zong;
-      zong<<xuehao<<xingming<<kecheng1<<kecheng2; //形成二维链表
+      zong<<xuehao<<xingming<<kecheng1<<kecheng2; 
 
 
     qDebug()<<"    学号"<<"\t  姓名"<<"\t\t课程1"<<"课程2";//输出初始表格
