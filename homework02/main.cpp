@@ -57,7 +57,7 @@ QDebug operator << (QDebug d, const studData &data)
 }
 
 
-//比较类，用于std::sort第三个参数
+
 class myCmp
 {
 public:
@@ -66,7 +66,7 @@ public:
 private:
     int currentColumn;
 };
-//重载比较规则,switch 从enum中匹配
+
 bool myCmp::operator()(const studData &d1,const  studData &d2)
 {
     bool result = false;
