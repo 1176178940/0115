@@ -106,8 +106,6 @@ bool myCmp::operator()(const studData &d1,const  studData &d2)
     return result;
 }
 
-
-
 class ScoreSorter
 {
 public:
@@ -116,7 +114,7 @@ public:
     void doSort();                  //实现排序功能
     friend QDebug operator << (QDebug d, const studData &data);
 private:
-    QString path;
+    QString path;                   //定义
     QList<studData > data;
     studData title;
     void expdata(quint8 list);     //实现将排序好后的数据写入文档
@@ -125,7 +123,7 @@ private:
 
 ScoreSorter::ScoreSorter(QString dataFile)
 {
-    path=dataFile;
+    path=dataFile;                             //初始化
 }
 
 
@@ -143,7 +141,7 @@ void ScoreSorter::readFile()
     if((title.stud).last() == "\n") title.stud.removeLast();
     studData eachdata;
 
-    while(!file.atEnd())
+    while(!file.atEnd())                                       //查找数据
     {
         QByteArray line = file.readLine();
         QString str(line);
@@ -159,44 +157,38 @@ void ScoreSorter::readFile()
 
 void ScoreSorter::doSort()
 {
-    for(int i=1;i<this->title.stud.size();i++)
+    for(int i=1;i<title.stud.size();i++)
     {
         myCmp stducmp(i-1);
-        std::sort(this->data.begin() , this->data.end() , stducmp );
-
+        std::sort(data.begin() , data.end() , stducmp );       //排序
         qDebug()<<"排序后输出，当前排序第 "<<i+1 <<" 列：";
-        qDebug() << '\t'<< (this->title);
-
-        for(int i=0;i<this->data.size();i++)  qDebug() << this->data.at(i);
-        qDebug()<<"---------------------------------------------------------------\n";
-        this->expdata(i+1);
+        qDebug() << '\t'<< (title);
+        for(int i=0;i<data.size();i++)  qDebug() << data.at(i);
+        qDebug()<<"-------------------------------------------------------\n";
+        expdata(i+1);
     }
 }
 
 
 void ScoreSorter::expdata(quint8 list)
 {
-    QFile file("sorted_"+this->path);
-
+    QFile file("sorted_"+path);
     file.open(QIODevice::ReadWrite | QIODevice::Append);
     QTextStream stream(&file);
     stream.setCodec("UTF-8");
     stream<<QString("排序后输出，当前排序第 ")<<list <<QString(" 列：")<<"\r\n";
     stream<<"\t";
 
-
-    for(int j=0;j<this->title.stud.size();j++)
-        stream<<this->title.stud.at(j)<<"\t";
+    for(int j=0;j<title.stud.size();j++)
+        stream<<title.stud.at(j)<<"\t";
         stream<<"\r\n";
-    for(int i=0;i<this->data.size();i++)
+    for(int i=0;i<data.size();i++)
     {
-        for(int j=0;j<this->title.stud.size();j++)
-        stream<<this->data.at(i).stud.at(j)<<"\t";
+        for(int j=0;j<title.stud.size();j++)
+        stream<<data.at(i).stud.at(j)<<"\t";
         stream<<"\r\n";
     }
-
-
-    stream<<"------------------------------------------------------------------"<<"\r\n\r\n";
+    stream<<"-------------------------------------------------------"<<"\r\n\r\n";
     file.close();
 }
 
@@ -204,13 +196,12 @@ void ScoreSorter::expdata(quint8 list)
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    //qInstallMessageHandler(myMessageOutput);
 
     QString datafile = "data.txt";
     QFile f("sorted_"+datafile);
     if (f.exists())  f.remove();
     ScoreSorter s(datafile);
-    s.readFile();
-    s.doSort();
+    s.readFile();     //读文件
+    s.doSort();       //写文件
     return a.exec();
 }
