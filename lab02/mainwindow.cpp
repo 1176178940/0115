@@ -79,17 +79,17 @@ void MainWindow::createToolBar ()
     clearBtn->setToolTip(tr("清除当前画板"));
     connect (clearBtn, &QToolButton::clicked, centerFrame, &CenterFrame::clearPaint);
 
-    //创建图片打开
-    pixmap.fill(BACKGROUND_COLOR);
-    QPainter painter(&pixmap);
-    QImage image(":/new/prefix1/3-160I0132929.png");
-    QRect targetRect(0,0,20,20);
-    QRect sourceRect =image.rect();
-    painter.drawImage(targetRect,image,sourceRect);
+    //创建图标打开图片
+    //pixmap.fill(BACKGROUND_COLOR);
+    //QPainter painter(&pixmap);
+    //QImage image(":/new/prefix1/3-160I0132929.png");
+    //QRect targetRect(0,0,20,20);
+    //QRect sourceRect =image.rect();
+    //painter.drawImage(targetRect,image,sourceRect);
     imgBtn= new QToolButton();
-    imgBtn->setToolTip(tr("选择图片"));
-    imgBtn->setIcon(QIcon(pixmap));
-    connect (imgBtn, &QToolButton::clicked, this, &MainWindow::on_pushButton_clicked);
+    //imgBtn->setToolTip(tr("选择图片"));
+    //imgBtn->setIcon(QIcon(pixmap));
+
 
 
 
@@ -128,21 +128,6 @@ void MainWindow::penColorChangged ()
     }
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    QString fileName = QFileDialog::getOpenFileName(
-                this, tr("open image file"),
-                "./", tr("Image files(*.bmp *.jpg *.pbm *.pgm *.png *.ppm *.xbm *.xpm);;All files (*.*)"));
-
-    if(fileName.isEmpty())
-    {
-        QMessageBox mesg;
-        mesg.warning(this,"警告","打开图片失败!");
-        return;
-
-    }
-
-}
 
 
 

@@ -42,6 +42,8 @@ class CenterFrame : public QFrame
      void on_btnTriangleClicked();
      void on_btnTextClicked();
      void on_edtTextEdited(const QString &text);
+     void on_btnDrawpicClicked();
+     void on_btnDiamondClicked();
 
 
  private:
@@ -54,6 +56,8 @@ class CenterFrame : public QFrame
      QPushButton* btnLine;
      QPushButton* btnTriangle;
      QPushButton* btnText;
+     QPushButton* btnDrawpic;
+     QPushButton* btnDiamond;
      QLineEdit* edtText;
 
 

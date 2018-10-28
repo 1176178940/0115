@@ -2,6 +2,8 @@
 #include <QMouseEvent>
 #include <QPen>
 #include <QMessageBox>
+#include <QString>
+#include <QFileDialog>
 
 
 DrawWidget::DrawWidget(QWidget *parent) : QWidget(parent)
@@ -130,6 +132,31 @@ void DrawWidget::setDrawnText(QString text)
     drawnText = text;
 }
 
+void DrawWidget::drawpic()
+{
+
+    QString open_fileName;
+    open_fileName = QFileDialog::getOpenFileName(this,tr("选择图片"), ".",tr("Image Files (*.png *.jpg *.bmp)"));
+
+
+    if(open_fileName.isEmpty())
+    {
+        QMessageBox mesg;
+        mesg.warning(this,"警告","未选择图片!");
+        return;
+    }
+    //打开选择的图片
+    pix->load(open_fileName);
+    QPixmap *newPix = new QPixmap(size());
+    newPix->fill (BACKGROUND_COLOR);
+    QPainter p(newPix);
+    p.drawPixmap (QPoint((width()-pix->width())/2,(height()-pix->width())/2), *pix);
+    delete pix;
+    pix = newPix;
+    update();
+}
+
+
 QRectF DrawWidget::textRect(const QPointF ptStart, const QPointF ptEnd, QString displayText, QFontMetrics fm)
 {
     // 获取显示字符串需要的Rect
@@ -248,6 +275,17 @@ void DrawWidget::drawShape(const QPointF ptStart,const QPointF ptEnd,const ST::S
          }
      }
          break;
+        //菱形
+    case ST::Diamond:{
+              QPointF point4((ptStart.x()+ptEnd.x())/2,ptStart.y());
+              QPointF point5(ptStart.x(),(ptStart.y()+ptEnd.y())/2);
+              QPointF point6((ptStart.x()+ptEnd.x())/2,ptEnd.y());
+              QPointF point7(ptEnd.x(),(ptStart.y()+ptEnd.y())/2);
+              QVector<QPointF> pointb;
+              pointb<<point4<<point5<<point6<<point7;
+              painter.drawPolygon(pointb);
+          }
+              break;
      default:
          break;
      }

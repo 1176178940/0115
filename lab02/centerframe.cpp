@@ -99,6 +99,26 @@ void CenterFrame::createUserCommandArea()
     connect(btnTriangle,&QPushButton::clicked,
             this,&CenterFrame::on_btnTriangleClicked);
 
+
+     //菱形
+     btnDiamond =new QPushButton(group);
+     btnDiamond->setToolTip("绘制菱形");
+     btnDiamond->setCheckable(true);
+     btnDiamond->setIconSize(p.size());
+
+     p.fill(BACKGROUND_COLOR);
+     //菱形的四个顶点
+     QPointF pt4(p.size().width()/2,3);
+     QPointF pt5(3,p.size().height()/2);
+     QPointF pt6(p.size().width()/2,p.size().height()-3);
+     QPointF pt7(p.size().width()-3,p.size().height()/2);
+     QVector<QPointF> ptb;
+     ptb<<pt7<<pt4<<pt4<<pt5<<pt5<<pt6<<pt6<<pt7;
+
+     painter.drawPolygon(ptb);
+     btnDiamond->setIcon (QIcon(p));
+     connect(btnDiamond,&QPushButton::clicked,this,&CenterFrame::on_btnDiamondClicked);
+
     // 文本按钮
     btnText = new QPushButton(group);
     btnText->setToolTip("绘制文本");
@@ -116,6 +136,21 @@ void CenterFrame::createUserCommandArea()
     connect(btnText,&QPushButton::clicked,
             this,&CenterFrame::on_btnTextClicked);
 
+    //设计图标，打开图片
+    btnDrawpic = new QPushButton(group);
+    btnDrawpic ->setToolTip("添加图片");
+    btnDrawpic ->setCheckable(true);
+    btnDrawpic ->setIconSize(p.size());
+
+    p.fill(BACKGROUND_COLOR);
+    QImage image(":/new/prefix1/3-160I0132929.png");
+    QRect targetRect(0,0,p.size().width(),p.size().height());
+    QRect sourceRect =image.rect();
+    painter.drawImage(targetRect,image,sourceRect);
+    btnDrawpic->setIcon (QIcon(p));
+    connect(btnDrawpic,&QPushButton::clicked,this, &CenterFrame::on_btnDrawpicClicked);
+
+
    // 选项Group布局
     QGridLayout *gridLayout = new QGridLayout();
     gridLayout->addWidget(btnRect,0,0);
@@ -123,6 +158,8 @@ void CenterFrame::createUserCommandArea()
     gridLayout->addWidget(btnTriangle,1,0);
     gridLayout->addWidget(btnLine,1,1);
     gridLayout->addWidget(btnText,2,0);
+    gridLayout->addWidget(btnDrawpic,2,1);
+    gridLayout->addWidget(btnDiamond,3,0);
     gridLayout->setMargin(3);
     gridLayout->setSpacing(3);
     group->setLayout(gridLayout);
@@ -300,3 +337,35 @@ void CenterFrame::on_edtTextEdited(const QString &text)
 {
     drawWidget->setDrawnText(text);
 }
+
+//增加图片按键响应槽函数
+ void CenterFrame::on_btnDrawpicClicked()
+ {
+     if(btnDrawpic->isChecked())
+     {
+         drawWidget->setShapeType(ST::picture);
+         drawWidget->drawpic();
+         updateButtonStatus();
+     }
+     else
+     {
+
+         drawWidget->setShapeType(ST::None);
+     }
+ }
+
+
+ //菱形
+void CenterFrame::on_btnDiamondClicked()
+{
+    if(btnDiamond->isChecked())
+    {
+        drawWidget->setShapeType(ST::Diamond);
+        updateButtonStatus();
+    }
+    else
+    {
+        drawWidget->setShapeType(ST::None);
+    }
+}
+
