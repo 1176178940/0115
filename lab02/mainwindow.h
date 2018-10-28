@@ -33,5 +33,6 @@ public:
      QToolButton *colorBtn;
      QToolButton *clearBtn;
      QToolButton *imgBtn;
+     QToolButton *saveBtn;
  };
  #endif // MAINWINDOW_H

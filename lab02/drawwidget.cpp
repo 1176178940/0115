@@ -117,6 +117,12 @@ void DrawWidget::clear ()
 
 }
 
+void DrawWidget::save()
+{
+     QString filename = QFileDialog::getSaveFileName(this,tr("选择图像"),"",tr("Images (*.png *.bmp *.jpg)"));
+     pix->save(filename);
+ }
+
 void DrawWidget::setShapeType(ST::ShapeType type)
 {
     drawType = type;
@@ -277,12 +283,12 @@ void DrawWidget::drawShape(const QPointF ptStart,const QPointF ptEnd,const ST::S
          break;
         //菱形
     case ST::Diamond:{
-              QPointF point4((ptStart.x()+ptEnd.x())/2,ptStart.y());
-              QPointF point5(ptStart.x(),(ptStart.y()+ptEnd.y())/2);
-              QPointF point6((ptStart.x()+ptEnd.x())/2,ptEnd.y());
-              QPointF point7(ptEnd.x(),(ptStart.y()+ptEnd.y())/2);
+              QPointF point11(ptStart.x(),(ptStart.y()+ptEnd.y())/2);
+              QPointF point12((ptStart.x()+ptEnd.x())/2,ptStart.y());
+              QPointF point13(ptEnd.x(),(ptStart.y()+ptEnd.y())/2);
+              QPointF point14((ptStart.x()+ptEnd.x())/2,ptEnd.y());
               QVector<QPointF> pointb;
-              pointb<<point4<<point5<<point6<<point7;
+              pointb<<point11<<point12<<point13<<point14;
               painter.drawPolygon(pointb);
           }
               break;

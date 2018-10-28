@@ -86,9 +86,18 @@ void MainWindow::createToolBar ()
     //QRect targetRect(0,0,20,20);
     //QRect sourceRect =image.rect();
     //painter.drawImage(targetRect,image,sourceRect);
-    imgBtn= new QToolButton();
+    //imgBtn= new QToolButton();
     //imgBtn->setToolTip(tr("选择图片"));
     //imgBtn->setIcon(QIcon(pixmap));
+
+
+    //保存图片
+    saveBtn=new QToolButton;
+    saveBtn->setText(tr("保存"));
+    saveBtn->setToolTip(tr("保存图片"));
+    connect(saveBtn,&QToolButton::clicked,centerFrame,&CenterFrame::savepicture);
+
+
 
 
 
@@ -103,7 +112,8 @@ void MainWindow::createToolBar ()
     toolBar->addWidget (colorBtn);
     toolBar->addSeparator();
     toolBar->addWidget (clearBtn);
-    toolBar->addWidget (imgBtn);
+ //   toolBar->addWidget (imgBtn);
+    toolBar->addWidget (saveBtn);
 }
 
 void MainWindow::penStyleChangged (int index)
@@ -127,7 +137,6 @@ void MainWindow::penColorChangged ()
         colorBtn->setIcon (QIcon(p));
     }
 }
-
 
 
 

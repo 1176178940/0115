@@ -108,12 +108,13 @@ void CenterFrame::createUserCommandArea()
 
      p.fill(BACKGROUND_COLOR);
      //菱形的四个顶点
-     QPointF pt4(p.size().width()/2,3);
-     QPointF pt5(3,p.size().height()/2);
-     QPointF pt6(p.size().width()/2,p.size().height()-3);
-     QPointF pt7(p.size().width()-3,p.size().height()/2);
+
+     QPointF pt11(3,p.size().height()/2);
+     QPointF pt12(p.size().width()/2,3);
+     QPointF pt13(p.size().width()-3,p.size().height()/2);
+     QPointF pt14(p.size().width()/2,p.size().height()-3);
      QVector<QPointF> ptb;
-     ptb<<pt7<<pt4<<pt4<<pt5<<pt5<<pt6<<pt6<<pt7;
+     ptb<<pt14<<pt11<<pt11<<pt12<<pt12<<pt13<<pt13<<pt14;
 
      painter.drawPolygon(ptb);
      btnDiamond->setIcon (QIcon(p));
@@ -136,9 +137,8 @@ void CenterFrame::createUserCommandArea()
     connect(btnText,&QPushButton::clicked,
             this,&CenterFrame::on_btnTextClicked);
 
-    //设计图标，打开图片
+    //设计图标按钮
     btnDrawpic = new QPushButton(group);
-    btnDrawpic ->setToolTip("添加图片");
     btnDrawpic ->setCheckable(true);
     btnDrawpic ->setIconSize(p.size());
 
@@ -158,8 +158,8 @@ void CenterFrame::createUserCommandArea()
     gridLayout->addWidget(btnTriangle,1,0);
     gridLayout->addWidget(btnLine,1,1);
     gridLayout->addWidget(btnText,2,0);
-    gridLayout->addWidget(btnDrawpic,2,1);
-    gridLayout->addWidget(btnDiamond,3,0);
+    gridLayout->addWidget(btnDrawpic,3,0);
+    gridLayout->addWidget(btnDiamond,2,1);
     gridLayout->setMargin(3);
     gridLayout->setSpacing(3);
     group->setLayout(gridLayout);
@@ -369,3 +369,9 @@ void CenterFrame::on_btnDiamondClicked()
     }
 }
 
+//保存
+void CenterFrame::savepicture(){
+     drawWidget->save();
+
+
+ }

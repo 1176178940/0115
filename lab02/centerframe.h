@@ -33,6 +33,7 @@ class CenterFrame : public QFrame
      void setPenWidth(int width=1);
      void setPenColor(QColor color);
      void clearPaint();
+     void savepicture();
 
 
  protected slots:
@@ -44,6 +45,7 @@ class CenterFrame : public QFrame
      void on_edtTextEdited(const QString &text);
      void on_btnDrawpicClicked();
      void on_btnDiamondClicked();
+
 
 
  private:
